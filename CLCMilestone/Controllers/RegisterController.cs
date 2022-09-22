@@ -12,6 +12,7 @@ namespace CLCMilestone.Controllers
             return View();
         }
 
+        // Registration handler conneced to SecurityDAO
         public IActionResult RegistrationHandler(Register User)
         {
             SecurityDAO securityService = new SecurityDAO();

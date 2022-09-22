@@ -1,0 +1,10 @@
+﻿@model CLCMilestone.Models.BoardModel
+
+<div align="center" class="card" style="width: 30rem; margin:5px;">
+    <div class="card-body">
+        <p class="card-text">Board Id: @Html.DisplayFor(modelItem => Model.id)</p>
+        <p class="card-text">Board Size: @Html.DisplayFor(modelItem => Model.size)</p>
+        <p class="card-text">Difficulty: @Html.DisplayFor(modelItem => Model.difficulty)</p>
+        <p class="card-text">Game Finished: @Html.DisplayFor(modelItem => Model.gameOver)</p>
+    </div>
+</div>

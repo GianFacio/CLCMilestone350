@@ -11,6 +11,7 @@ namespace CLCMilestone.Controllers
             return View();
         }
 
+        // Process login pages
         public IActionResult ProcessLogin(Login User)
         {
             SecurityService securityService = new SecurityService();
