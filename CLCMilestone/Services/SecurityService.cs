@@ -9,5 +9,10 @@ namespace CLCMilestone.Services
         {
             return securityDAO.FindUserByNameAndPassword(User);
         }
+
+        public void RegisterUser (Register User)
+        {
+           securityDAO.RegisterUser(User);
+        }
     }
 }

@@ -8,9 +8,9 @@ namespace CLCMilestone.Services
 {
     public class SecurityDAO
     {
-        string connectionString = @"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=Test;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
+        string connectionString = @"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=CLC;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
 
-        public bool FindUserByNameAndPassword(Login user)
+        public bool FindUserByNameAndPassword(Login User)
         {
             // Assume nothing is found
             bool success = false;
@@ -24,8 +24,8 @@ namespace CLCMilestone.Services
                 SqlCommand command = new SqlCommand(sqlStatement, connection);
 
                 // Define the values of the two placeholders in the sqlStatement string
-                command.Parameters.Add("@USERNAME", System.Data.SqlDbType.VarChar, 50).Value = user.Username;
-                command.Parameters.Add("@PASSWORD", System.Data.SqlDbType.VarChar, 50).Value = user.Password;
+                command.Parameters.Add("@USERNAME", System.Data.SqlDbType.VarChar, 50).Value = User.Username;
+                command.Parameters.Add("@PASSWORD", System.Data.SqlDbType.VarChar, 50).Value = User.Password;
 
                 try
                 {
@@ -40,7 +40,39 @@ namespace CLCMilestone.Services
                     Console.WriteLine(ex.Message);
                 };
             }
-        return success;
+            return success;
+        }
+
+        public string RegisterUser(Register User)
+        {
+            string sqlStatement = "INSERT INTO dbo.users (FIRSTNAME, LASTNAME, SEX, AGE, STATE, EMAIL, USERNAME, PASSWORD) VALUES (@firstname, @lastname, @sex, @age, @state, @email, @username, @password)";
+
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                SqlCommand command = new SqlCommand(sqlStatement, connection);
+
+                command.Parameters.Add("@firstname", System.Data.SqlDbType.VarChar, 50).Value = User.FirstName;
+                command.Parameters.Add("@lastname", System.Data.SqlDbType.VarChar, 50).Value = User.LastName;
+                command.Parameters.Add("@sex", System.Data.SqlDbType.VarChar, 50).Value = User.Sex;
+                command.Parameters.Add("@age", System.Data.SqlDbType.VarChar, 50).Value = User.Age;
+                command.Parameters.Add("@state", System.Data.SqlDbType.VarChar, 50).Value = User.State;
+                command.Parameters.Add("@email", System.Data.SqlDbType.VarChar, 50).Value = User.Email;
+                command.Parameters.Add("@username", System.Data.SqlDbType.VarChar, 50).Value = User.Username;
+                command.Parameters.Add("@password", System.Data.SqlDbType.VarChar, 50).Value = User.Password;
+
+                try
+                {
+                    connection.Open();
+                    command.ExecuteNonQuery();
+                    connection.Close();
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                    return "RegistrationFailed";
+                }
+            }
+            return "RegistrationSuccess";
         }
     }
 }

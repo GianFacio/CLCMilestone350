@@ -1,6 +1,7 @@
 ﻿using CLCMilestone.Models;
+using CLCMilestone.Services;
 using Microsoft.AspNetCore.Mvc;
-
+using System.Security.Policy;
 
 namespace CLCMilestone.Controllers
 {
@@ -11,11 +12,13 @@ namespace CLCMilestone.Controllers
             return View();
         }
 
-        public IActionResult RegisterDetails(Register register)
+        public IActionResult RegistrationHandler(Register User)
         {
-            return View(register);
+            SecurityDAO securityService = new SecurityDAO();
+            return View(securityService.RegisterUser(User));
         }
 
-        
+
+
     }
 }
